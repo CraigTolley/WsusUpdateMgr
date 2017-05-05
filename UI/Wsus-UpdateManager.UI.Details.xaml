@@ -1,0 +1,65 @@
+﻿<Window x:Class="System.Windows.Window"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="WSUS Update Details" Height="725" Width="1000" MinWidth="600" MinHeight="600">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="100*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="135"/>
+            <ColumnDefinition Width="89*"/>
+            <ColumnDefinition Width="135"/>
+            <ColumnDefinition Width="89*"/>
+        </Grid.ColumnDefinitions>
+        <Label x:Name="Title" Content="Details" HorizontalAlignment="Stretch" Margin="5" VerticalAlignment="Top" FontWeight="Bold" Grid.Row="0" Grid.Column="0" FontSize="16"/>
+        <Label x:Name="lbl_UpdateTitle" Content="Title" HorizontalAlignment="Left" Margin="5" VerticalAlignment="Top" FontWeight="Bold" Grid.Row="1" Grid.Column="0"/>
+        <Label x:Name="lbl_UpdateDescription" Content="Description" HorizontalAlignment="Left" Margin="5" VerticalAlignment="Top" FontWeight="Bold" Grid.Row="2" Grid.Column="0"/>
+        <Label x:Name="lbl_UpdateUrl" Content="URL" HorizontalAlignment="Left" Margin="5" VerticalAlignment="Top" FontWeight="Bold" Grid.Row="3" Grid.Column="0"/>
+        <Label x:Name="lbl_UpdateGuid" Content="GUID" HorizontalAlignment="Left" Margin="5" VerticalAlignment="Top" FontWeight="Bold" Grid.Row="4" Grid.Column="0"/>
+        <Label x:Name="lbl_UpdateClassification" Content="Classification" HorizontalAlignment="Left" Margin="5" VerticalAlignment="Top" FontWeight="Bold" Grid.Row="5" Grid.Column="0"/>
+        <Label x:Name="lbl_UpdateProduct" Content="Product" HorizontalAlignment="Left" Margin="5" VerticalAlignment="Top" FontWeight="Bold" Grid.Row="6" Grid.Column="0"/>
+        <Label x:Name="lbl_UpdateArrivalDate" Content="Arrival Date" HorizontalAlignment="Left" Margin="5" VerticalAlignment="Top" FontWeight="Bold" Grid.Row="7" Grid.Column="0"/>
+        <Label x:Name="lbl_UpdateIsApproved" Content="Is Approved" HorizontalAlignment="Left" Margin="5" VerticalAlignment="Top" FontWeight="Bold" Grid.Row="8" Grid.Column="0"/>
+        <Label x:Name="lbl_UpdateIsDeclined" Content="Is Declined" HorizontalAlignment="Left" Margin="5" VerticalAlignment="Top" FontWeight="Bold" Grid.Row="8" Grid.Column="2"/>
+        <Label x:Name="lbl_UpdateSupersedes" Content="Supersedes Updates" HorizontalAlignment="Left" Margin="5" VerticalAlignment="Top" FontWeight="Bold" Grid.Row="9" Grid.Column="0"/>
+        <Label x:Name="lbl_UpdateIsSuperseded" Content="Is Superseded" HorizontalAlignment="Left" Margin="5" VerticalAlignment="Top" FontWeight="Bold" Grid.Row="9" Grid.Column="2"/>
+        <Label x:Name="lbl_UpdateApprovals" Content="Approvals" HorizontalAlignment="Left" Margin="5" VerticalAlignment="Top" FontWeight="Bold" Grid.Row="10" Grid.Column="0"/>
+
+        <TextBlock x:Name="txt_UpdateTitle" Text="Title" HorizontalAlignment="Stretch" Margin="5" VerticalAlignment="Center" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3"/>
+        <TextBlock x:Name="txt_UpdateDescription" Text="Description" TextWrapping="WrapWithOverflow" HorizontalAlignment="Stretch" Margin="5" VerticalAlignment="Center" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" />
+        <TextBlock x:Name="txt_UpdateUrl" Text="URL" HorizontalAlignment="Stretch" Margin="5" VerticalAlignment="Center" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3"/>
+        <TextBlock x:Name="txt_UpdateGuid" Text="GUID" HorizontalAlignment="Stretch" Margin="5" VerticalAlignment="Center" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="3"/>
+        <TextBlock x:Name="txt_UpdateClassification" Text="Classification" HorizontalAlignment="Stretch" Margin="5" VerticalAlignment="Center" Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="3"/>
+        <TextBlock x:Name="txt_UpdateProduct" Text="Product" HorizontalAlignment="Stretch" Margin="5" VerticalAlignment="Center" Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="3"/>
+        <TextBlock x:Name="txt_UpdateArrivalDate" Text="Arrival Date" HorizontalAlignment="Stretch" Margin="5" VerticalAlignment="Center" Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="3"/>
+        <TextBlock x:Name="txt_UpdateIsApproved" Text="Is Approved" HorizontalAlignment="Stretch" Margin="5" VerticalAlignment="Center" Grid.Row="8" Grid.Column="1"/>
+        <TextBlock x:Name="txt_UpdateIsDeclined" Text="Is Declined" HorizontalAlignment="Stretch" Margin="5" VerticalAlignment="Center" Grid.Row="8" Grid.Column="3"/>
+        <TextBlock x:Name="txt_UpdateSupersedes" Text="Supersedes Updates" HorizontalAlignment="Stretch" Margin="5" VerticalAlignment="Center" Grid.Row="9" Grid.Column="1"/>
+        <TextBlock x:Name="txt_UpdateIsSuperseded" Text="Is Superseded" HorizontalAlignment="Stretch" Margin="5" VerticalAlignment="Center" Grid.Row="9" Grid.Column="3"/>
+        <TextBlock x:Name="txt_ApprovalsCount" Text="Approvals Count" HorizontalAlignment="Stretch" Margin="5" VerticalAlignment="Center" Grid.Row="10" Grid.Column="1"/>
+        <DataGrid x:Name="dg_Approvals" HorizontalAlignment="Stretch" Margin="10" VerticalAlignment="Stretch" Grid.Row="11" Grid.Column="0" Grid.ColumnSpan="4" AutoGenerateColumns="false">
+            <DataGrid.Columns>
+                <DataGridTextColumn x:Name="dgc_Action" Header="Action" Binding="{Binding Path=Action}" Width="0.2*"/>
+                <DataGridTextColumn x:Name="dgc_AdministratorName" Header="Approvers Name" Binding="{Binding Path=AdministratorName}" Width="0.5*"/>
+                <DataGridTextColumn x:Name="dgc_ComputerGroupName" Header="Target Computer Group" Binding="{Binding Path=ComputerGroupName}" Width="0.5*"/>
+                <DataGridTextColumn x:Name="dgc_State" Header="State" Binding="{Binding Path=State}" Width="0.2*"/>
+                <DataGridTextColumn x:Name="dgc_CreationDate" Header="Approval Date" Binding="{Binding Path=CreationDate}" Width="0.4*"/>
+                <DataGridTextColumn x:Name="dgc_GoLiveTime" Header="Go Live Time" Binding="{Binding Path=GoLiveTime}" Width="0.4*"/>
+                <DataGridTextColumn x:Name="dgc_Deadline" Header="Deadline" Binding="{Binding Path=Deadline}" Width="0.4*"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Button x:Name="btn_CloseDetails" Content="Close Details" Grid.Column="3" HorizontalAlignment="Stretch" Margin="10" VerticalAlignment="Stretch" Height="Auto" />
+    </Grid>
+</Window>
