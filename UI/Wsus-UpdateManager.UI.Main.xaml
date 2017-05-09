@@ -34,6 +34,7 @@
                 <Grid Width="952" HorizontalAlignment="Center">
                 <Button x:Name="manage_selectall" Content="Select All" HorizontalAlignment="Left" Margin="9,10,0,0" VerticalAlignment="Top" Width="120"/>
                 <Button x:Name="manage_unselectall" Content="Unselect All" HorizontalAlignment="Left" Margin="10,37,0,0" VerticalAlignment="Top" Width="120"/>
+
                 <Button x:Name="manage_declineselected" Content="Decline Update" HorizontalAlignment="Left" Margin="135,37,0,0" VerticalAlignment="Top" Width="120"/>
                 <Button x:Name="manage_exportcsv" Content="Export CSV" HorizontalAlignment="Left" Margin="135,10,0,0" VerticalAlignment="Top" Width="120"/>
                 <GroupBox x:Name="group_approvals" Header="Approval Action &amp; Target:" HorizontalAlignment="Left"  Margin="260,0,0,381" IsEnabled="True" Height="61" VerticalAlignment="Top" Width="690">
@@ -64,7 +65,9 @@
         </GroupBox>
         <StatusBar Height="30" Margin="0" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Padding="10,0,10,0">
             <StatusBarItem Name="CurrentAction" Content="Idle"/>
-            <StatusBarItem Name="Github" Content="https://github.com/CraigTolley/WsusUpdateMgr" HorizontalAlignment="Right"/>
+            <StatusBarItem HorizontalAlignment="Right" Width="140">
+                <Button x:Name="show_help" Content="Help and About" HorizontalAlignment="Right" Width="134"/>
+            </StatusBarItem>
         </StatusBar>
     </Grid>
 </Window>

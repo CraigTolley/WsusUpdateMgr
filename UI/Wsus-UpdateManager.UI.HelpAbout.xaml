@@ -1,0 +1,147 @@
+<Window x:Class="System.Windows.Window"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="WSUS Update Manager - About and Help" Height="725" Width="1000" MinWidth="600" MinHeight="600">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="135"/>
+            <ColumnDefinition Width="89*"/>
+            <ColumnDefinition Width="135"/>
+            <ColumnDefinition Width="89*"/>
+        </Grid.ColumnDefinitions>
+        <Label x:Name="Title_About" Content="About" HorizontalAlignment="Stretch" Margin="5" VerticalAlignment="Top" FontWeight="Bold" Grid.Row="0" Grid.Column="0" FontSize="16"/>
+        <Label x:Name="lbl_AboutTitle" Content="Name" HorizontalAlignment="Left" Margin="5" VerticalAlignment="Top" FontWeight="Bold" Grid.Row="1" Grid.Column="0"/>
+        <Label x:Name="lbl_AboutVersion" Content="Version" HorizontalAlignment="Left" Margin="5" VerticalAlignment="Top" FontWeight="Bold" Grid.Row="2" Grid.Column="0"/>
+        <Label x:Name="lbl_AboutCreator" Content="Created By" HorizontalAlignment="Left" Margin="5" VerticalAlignment="Top" FontWeight="Bold" Grid.Row="1" Grid.Column="2"/>
+        <Label x:Name="lbl_AboutCreatorUrl" Content="URLs" HorizontalAlignment="Left" Margin="5" VerticalAlignment="Top" FontWeight="Bold" Grid.Row="2" Grid.Column="2"/>
+
+        <TextBlock x:Name="txt_AboutTitle" Text="WSUS Update Manager" HorizontalAlignment="Stretch" Margin="5" VerticalAlignment="Center" Grid.Row="1" Grid.Column="1" />
+        <TextBlock x:Name="txt_AboutVersion" Text="1.1" TextWrapping="WrapWithOverflow" HorizontalAlignment="Stretch" Margin="5" VerticalAlignment="Center" Grid.Row="2" Grid.Column="1"/>
+        <TextBlock x:Name="txt_AboutCreator" Text="Craig Tolley" HorizontalAlignment="Stretch" Margin="5" VerticalAlignment="Center" Grid.Row="1" Grid.Column="3"/>
+        <TextBlock x:Name="txt_AboutCreatorUrl" HorizontalAlignment="Stretch" Margin="5" VerticalAlignment="Center" Grid.Row="2" Grid.Column="3">
+            <Hyperlink x:Name = 'AuthorLink' NavigateUri="https://www.craig-tolley.co.uk">https://www.craig-tolley.co.uk</Hyperlink><LineBreak />
+            <Hyperlink x:Name = 'GitHubLink' NavigateUri="https://github.com/CraigTolley/WsusUpdateMgr">https://github.com/CraigTolley/WsusUpdateMgr</Hyperlink>
+        </TextBlock>
+
+        <Label x:Name="Title_Help" Content="Help" HorizontalAlignment="Stretch" Margin="5" VerticalAlignment="Top" FontWeight="Bold" Grid.Row="3" Grid.Column="0" FontSize="16"/>
+
+
+        <RichTextBox x:Name="richTextBox"  Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Visible"  >
+            <FlowDocument FontFamily="Segoe UI" FontSize="12">
+                <Paragraph>
+                    WSUS Update Manager is designed to allow administrators an easy way to query updates and approvals for different Computer Target Groups. It was created as I found that managing updates that had been approved for a test group in the WSUS console was difficult, and needed something interactive and efficient to manage updates which may have staged approvals (e.g test and production groups on the same WSUS instance).
+                </Paragraph>
+                <Paragraph>
+                    <Bold>- Dependencies -</Bold>
+                </Paragraph>
+                <Paragraph>
+                    The tool requires that the WSUS RSAT tool is installed on the system that it is being run from. You will also need permissions to access the WSUS instance.
+                </Paragraph>
+                <Paragraph>
+                    <Bold>- Connecting to WSUS -</Bold>
+                </Paragraph>
+                <Paragraph>
+                    You will need to run the tool as a user that has access to the WSUS instance. I could not find a way through the API to specify alternate credentials to use when connecting. In most installations you will just need to specify the hostname of the server running WSUS. Once you have entered the details, select Connect. If the connection is successful then details about the available Target Computer Groups will be loaded along with updates categories and classifications.
+                </Paragraph>
+                <Paragraph>
+                    <Bold>- Filtering Updates -</Bold>
+                </Paragraph>
+                <Paragraph>
+                    In the Filters section choose the updates and computer group that you want to review approvals for. Choosing a classification or category can reduce the amount of time taken to load updates. Click 'Get Update Details' when complete.
+                </Paragraph>
+                <Paragraph>
+                    The updates will be retrieved from the WSUS database and details loaded into the 'Manage Updates' panel. This can take a couple of minutes (tests loaded details of 21000 updates in around 90 seconds).
+                </Paragraph>
+                <Paragraph>
+                    <Bold>- Managing Updates -</Bold>
+                </Paragraph>
+                <Paragraph>
+                    This panel allows you to see details of all updates and the approvals for the selected Computer Group. The Approval State field can be one of 3 values:
+                </Paragraph>
+                <List>
+                    <ListItem>
+                        <Paragraph>
+                            Approved: This shows that the update has an approval for the current computer group. It also shows the action that the approval was given for and in brackets the Computer Group that the approval was given on. This shows whether the approval was given for the current group or a parent group and shows inheritance of updates.
+                        </Paragraph>
+                    </ListItem>
+                    <ListItem>
+                        <Paragraph>
+                            Declined: The update has been declined and will not be installed on any systems in the WSUS instance.
+                        </Paragraph>
+                    </ListItem>
+                    <ListItem>
+                        <Paragraph>
+                            Unapproved: There are no approvals for this computer group or any parent computer groups.
+                        </Paragraph>
+                    </ListItem>
+                </List>
+                <Paragraph>
+                    You can view more details about any of the updates including details of all approvals by double clicking the update.
+                </Paragraph>
+                <Paragraph>
+                    <Bold>- Approving Updates -
+                    </Bold>
+                </Paragraph>
+                <Paragraph>
+                    Updates can be approved for 1 of 3 actions: 
+	- Install
+	- Uninstall
+	- Not Approved
+	
+The Not Approved option exists to allow you to override an inherited Install or Uninstall action on a child group without needed to Decline the update. 
+
+When approving updates you are given the option to approve the update on either the currently selected Computer Group or on any of the parent Computer Groups.
+                </Paragraph>
+                <List>
+                    <ListItem>
+                        <Paragraph>1. Select the updates to Decline by putting a check in the corresponding Selected column or using the 'Select All' button.</Paragraph>
+                    </ListItem>
+                    <ListItem>
+                        <Paragraph>2. Choose the required Approval Action.</Paragraph>
+                    </ListItem>
+                    <ListItem>
+                        <Paragraph>3. Choose the required target Computer Group</Paragraph>
+                    </ListItem>
+                    <ListItem>
+                        <Paragraph>4. Click 'Approve Selected'</Paragraph>
+                    </ListItem>
+                </List>
+                    <Paragraph>
+                        Approvals for all selected updates will be processed and the Manage Updates panel updated to reflect the new status of the update.
+                    </Paragraph>
+                    <Paragraph>
+                        <Bold>- Declining Updates -</Bold>
+                    </Paragraph>
+                    <Paragraph>
+                        Declining an update makes the update unavailable for installation for *ANY* computer group within the WSUS instance.
+                    </Paragraph>
+                    <List>
+                        <ListItem>
+                            <Paragraph>1. Select the updates to Decline by putting a check in the corresponding Selected column or using the 'Select All' button.</Paragraph>
+                        </ListItem>
+                        <ListItem>
+                            <Paragraph>2. Click 'Decline Update'</Paragraph>
+                        </ListItem>
+                    </List>
+                    <Paragraph>
+                        Declines for all selected updates will be processed and the Manage Updates panel updated to reflect the new status of the update.
+                    </Paragraph>
+                    <Paragraph>
+                        <Bold>- Exporting Update Details -</Bold>
+                    </Paragraph>
+                    <Paragraph>
+                        All information in the current update details view can be exported to a CSV file by selecting the 'Export CSV' option. You will be prompted for the location to save the CSV in to.
+                    </Paragraph>
+                <Paragraph />
+            </FlowDocument>
+        </RichTextBox>
+        <Button x:Name="btn_Close" Content="Close" Grid.Column="3" HorizontalAlignment="Stretch" Margin="10" VerticalAlignment="Stretch" Height="Auto" />
+    </Grid>
+</Window>

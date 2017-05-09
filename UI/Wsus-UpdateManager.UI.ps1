@@ -2,6 +2,7 @@ $VerbosePreference = "continue"
 
 [xml]$XAMLMain = Get-Content -Path (Join-Path -Path (Split-Path $MyInvocation.MyCommand.Path) -ChildPath "Wsus-UpdateManager.UI.Main.xaml")
 [xml]$XAMLDetails = Get-Content -Path (Join-Path -Path (Split-Path $MyInvocation.MyCommand.Path) -ChildPath "Wsus-UpdateManager.UI.Details.xaml")
+[xml]$XAMLHelpAbout = Get-Content -Path (Join-Path -Path (Split-Path $MyInvocation.MyCommand.Path) -ChildPath "Wsus-UpdateManager.UI.HelpAbout.xaml")
 
 function Show-WsusUpdateManagerUi {
     # Load the WPF Assemblys
@@ -9,8 +10,8 @@ function Show-WsusUpdateManagerUi {
     Add-type -AssemblyName PresentationFramework
     
     # XAML Window code
-    $Reader=(New-Object System.Xml.XmlNodeReader $global:XAMLMain)  
-    $Window=[Windows.Markup.XamlReader]::Load( $Reader )  
+    $Reader= New-Object System.Xml.XmlNodeReader $global:XAMLMain
+    $Window=[Windows.Markup.XamlReader]::Load($Reader)  
 
     #region BindControls
     $txt_CurrentAction = $Window.FindName("CurrentAction")
@@ -37,6 +38,8 @@ function Show-WsusUpdateManagerUi {
     $dgv_manage_updates = $Window.FindName("manage_updates")
     $ddl_manage_approvalsaction = $Window.FindName("ddl_manage_approvalsaction")
     $ddl_manage_approvalstarget = $Window.FindName("ddl_manage_approvalstarget")
+
+    $btn_show_help = $Window.FindName("show_help")
 
     #endregion
 
@@ -253,6 +256,10 @@ function Show-WsusUpdateManagerUi {
 
     #endregion
 
+    $btn_show_help.Add_Click( {
+        Show-WsusUpdateHelpAboutUi
+        } )
+
     $Window.ShowDialog() | Out-Null
 } 
 
@@ -299,7 +306,19 @@ function Show-WsusUpdateDetailsUi {
     # Populate all of the fields
     $txt_UpdateTitle.Text = $Update.Title
     $txt_UpdateDescription.Text = $Update.Description
-    $txt_UpdateUrl.Text = [String]::Join("`r`n",@($Update.AdditionalInformationUrls))
+    
+    
+    # Add in a Hyperlink for each URL
+    $txt_UpdateUrl.Text = ""
+    foreach ($Url in $Update.AdditionalInformationUrls) {
+        $NewLink = New-Object System.Windows.Documents.Hyperlink
+        $NewLink.NavigateUri = $Url
+        $NewLink.Inlines.Add($Url)
+        $NewLink.Inlines.Add((New-Object System.Windows.Documents.LineBreak))
+        $NewLink.add_Click({ Start-Process ($this.NavigateUri) }) 
+        $txt_UpdateUrl.AddChild($NewLink)
+    }
+    
     $txt_UpdateGuid.Text = $UpdateGuid
     $txt_UpdateClassification.Text = $Update.UpdateClassificationTitle
     $txt_UpdateProduct.Text = [String]::Join(", ",@($Update.ProductFamilyTitles)) + " - " + [String]::Join(", ",@($Update.ProductTitles))
@@ -316,4 +335,31 @@ function Show-WsusUpdateDetailsUi {
     $DetailsWindow.ShowDialog() | Out-Null
 }
 
-Show-WsusUpdateManagerUi
+function Show-WsusUpdateHelpAboutUi {
+
+    # Load the WPF Assemblys
+    Add-type -AssemblyName PresentationCore
+    Add-type -AssemblyName PresentationFramework
+    
+    # XAML Window code
+    $Reader=(New-Object System.Xml.XmlNodeReader $global:XAMLHelpAbout)  
+    $HelpWindow=[Windows.Markup.XamlReader]::Load( $Reader )  
+   
+    #region BindControls
+        $btn_Close = $HelpWindow.FindName("btn_Close")
+        $lnk_Author = $HelpWindow.FindName("AuthorLink")
+        $lnk_GitHub = $HelpWindow.FindName("GitHubLink")
+    # endregion
+
+    $btn_Close.Add_Click( { $HelpWindow.Close() } )
+
+    $lnk_Author.Add_Click({
+        Start-Process ($lnk_Author.NavigateUri)
+    })
+
+    $lnk_GitHub.Add_Click({
+        Start-Process ($lnk_GitHub.NavigateUri)
+    })
+
+    $HelpWindow.ShowDialog() | Out-Null
+}
