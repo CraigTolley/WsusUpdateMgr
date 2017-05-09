@@ -7,4 +7,4 @@ With this simple to use interface you can also Export details of approvals, and 
 
 To run the GUI, download the entire repository and execute the Start-WsusUpdateMgr.ps1 script. Further Help and instructions can be found by selecting 'Help and About' in the bottom right corner.
 
-![WsusUpdateMgr Screenshot](http://Images/WsusUpdateMgr.png)
+![WsusUpdateMgr Screenshot](Images/WsusUpdateMgr.png)
