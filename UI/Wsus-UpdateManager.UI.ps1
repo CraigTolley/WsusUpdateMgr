@@ -57,6 +57,7 @@ function Show-WsusUpdateManagerUi {
                 [System.Windows.MessageBox]::Show("Could not connect to the WSUS Server. `r`n`r`nError: $($_)", "Unable to Connect",[System.Windows.MessageBoxButton]::OK ,[System.Windows.MessageBoxImage]::Error)
                 $grp_filters.IsEnabled = $false
                 $grp_updates.IsEnabled = $false
+                $txt_CurrentAction.Content = "Failed to connect."
                 return
             }
 
