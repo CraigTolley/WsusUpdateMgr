@@ -58,15 +58,27 @@
                         <DataGridTextColumn x:Name="dgc_UpdateDate" Header="Update Date" Binding="{Binding Path=ReleaseDate}" Width="0.2*" IsReadOnly="True"/>
                         <DataGridTextColumn x:Name="dgc_UpdateClassification" Header="Classification" Binding="{Binding Path=UpdateClassification}" Width="0.2*" IsReadOnly="True"/>
                         <DataGridTextColumn x:Name="dgc_UpdateApprovalState" Header="Approval State" Binding="{Binding Path=ApprovalState}" Width="0.3*" IsReadOnly="True"/>
-                        <DataGridCheckBoxColumn x:Name="dgc_UpdateChecked" Header="Selected?" Binding="{Binding Path=Checked}" Width="60"/>
+                        <!--<DataGridCheckBoxColumn x:Name="dgc_UpdateChecked" Header="Selected?" Binding="{Binding Path=Checked}" Width="60"/>-->
+                        <DataGridTemplateColumn Header="Selected?">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <CheckBox IsChecked="{Binding Checked,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
                     </DataGrid.Columns>
                 </DataGrid>
             </Grid>
         </GroupBox>
         <StatusBar Height="30" Margin="0" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Padding="10,0,10,0">
             <StatusBarItem Name="CurrentAction" Content="Idle"/>
-            <StatusBarItem HorizontalAlignment="Right" Width="140">
-                <Button x:Name="show_help" Content="Help and About" HorizontalAlignment="Right" Width="134"/>
+            <StatusBarItem HorizontalAlignment="Right" Margin="0">
+                <StackPanel Orientation="Horizontal" Margin="0">
+                    <StatusBarItem Name="ItemCounts" Content="" HorizontalAlignment="Stretch" HorizontalContentAlignment="Right" Padding="0"/>
+                    <StatusBarItem HorizontalAlignment="Right" HorizontalContentAlignment="Right" Width="150" Margin="0" Padding="0">
+                        <Button x:Name="show_help" Content="Help and About" HorizontalAlignment="Right" Width="134"/>
+                    </StatusBarItem>
+                </StackPanel>
             </StatusBarItem>
         </StatusBar>
     </Grid>

@@ -15,6 +15,7 @@ function Show-WsusUpdateManagerUi {
 
     #region BindControls
     $txt_CurrentAction = $Window.FindName("CurrentAction")
+    $txt_ItemCounts = $Window.FindName("ItemCounts")
 
     $grp_connect = $Window.FindName("group_connect")
     $txt_connect_servername = $Window.FindName("connect_servername")
@@ -102,6 +103,7 @@ function Show-WsusUpdateManagerUi {
                 $ddl_filters_computergroup.SelectedIndex = 0
 
                 $txt_CurrentAction.Content = "Ready to search for Updates"
+                $txt_ItemCounts.Content = ""
 
             }
             catch {
@@ -122,7 +124,7 @@ function Show-WsusUpdateManagerUi {
                 $dgv_manage_updates.ItemsSource = $null
                 $Global:Updates = Get-WsusUpdatesAndApprovals -ClassificationGuid $ddl_filters_updateclassification.SelectedValue -UpdateCategoryGuid $ddl_filters_updatecategory.SelectedValue -ComputerGroupGuid $ddl_filters_computergroup.SelectedItem.Id -ApprovalStatus $ddl_filters_approvalstatus.SelectedValue
                 $dgv_manage_updates.ItemsSource = $Global:Updates
-                
+                $txt_ItemCounts.Content = "Retrieved $($Global:Updates.Count) updates."
                 
                 # Get details of all of the parent groups
                 $txt_CurrentAction.Content = "Retrieving details of parent groups"
