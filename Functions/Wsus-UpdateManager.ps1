@@ -3,7 +3,7 @@
 #
 # VERSION     DATE         USER                DETAILS
 # 1           03/05/2017   Craig Tolley        First Version
-#
+# 1.1         30/05/2017   Craig Tolley        Added 'Superseded' information to update details
 # ----------------------------------------------------------------------------------------------------------
 $Global:WsusServer = $null
 
@@ -188,10 +188,14 @@ function Get-WsusUpdatesAndApprovals {
         # This method was dropped as it takes around 30% longer in testing.
         #$UpdateApprovals = $PossibleGroups | ForEach { $Update.GetUpdateApprovals($_) } 
 
-        if ($Update.IsDeclined -eq $true) { 
+        if ($Update.IsDeclined -eq $true -and $Update.IsSuperseded -eq $true) { 
+            $UpdateObj.ApprovalState = "Declined (Superseded)" 
+        } 
+
+        elseif ($Update.IsDeclined -eq $true -and $Update.IsSuperseded -eq $false) { 
             $UpdateObj.ApprovalState = "Declined" 
         } 
-        
+
         elseif ($UpdateApprovals.Count -eq 0) {
             $UpdateObj.ApprovalState = "Unapproved"
         }
