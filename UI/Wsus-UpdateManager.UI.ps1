@@ -8,7 +8,8 @@ function Show-WsusUpdateManagerUi {
     # Load the WPF Assemblys
     Add-type -AssemblyName PresentationCore
     Add-type -AssemblyName PresentationFramework
-    
+    [void] [System.Reflection.Assembly]::LoadWithPartialName("System.Windows.Forms") 
+
     # XAML Window code
     $Reader= New-Object System.Xml.XmlNodeReader $global:XAMLMain
     $Window=[Windows.Markup.XamlReader]::Load($Reader)  
