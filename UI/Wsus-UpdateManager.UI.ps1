@@ -29,6 +29,7 @@ function Show-WsusUpdateManagerUi {
     $ddl_filters_updatecategory = $Window.FindName("filters_updatecategory")
     $ddl_filters_updateclassification = $Window.FindName("filters_updateclassification")
     $ddl_filters_approvalstatus = $Window.FindName("filters_approvalstatus")
+    $chk_filters_includesuperseded = $Window.FindName("filters_includesuperseded")
     $btn_filters_getupdatedetails = $Window.FindName("filters_getupdatedetails")
 
     $grp_updates = $Window.FindName("group_updates")
@@ -123,7 +124,7 @@ function Show-WsusUpdateManagerUi {
             try {
                 $txt_CurrentAction.Content = "Retrieving details of updates (this can take some time depending on your chosen filters)"
                 $dgv_manage_updates.ItemsSource = $null
-                $Global:Updates = Get-WsusUpdatesAndApprovals -ClassificationGuid $ddl_filters_updateclassification.SelectedValue -UpdateCategoryGuid $ddl_filters_updatecategory.SelectedValue -ComputerGroupGuid $ddl_filters_computergroup.SelectedItem.Id -ApprovalStatus $ddl_filters_approvalstatus.SelectedValue
+                $Global:Updates = Get-WsusUpdatesAndApprovals -ClassificationGuid $ddl_filters_updateclassification.SelectedValue -UpdateCategoryGuid $ddl_filters_updatecategory.SelectedValue -ComputerGroupGuid $ddl_filters_computergroup.SelectedItem.Id -ApprovalStatus $ddl_filters_approvalstatus.SelectedValue -IncludeSupersededUpdates ([bool]($chk_filters_includesuperseded.IsChecked))
                 $dgv_manage_updates.ItemsSource = $Global:Updates
                 $txt_ItemCounts.Content = "Retrieved $($Global:Updates.Count) updates."
                 

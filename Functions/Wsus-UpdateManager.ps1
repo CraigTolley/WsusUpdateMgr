@@ -139,6 +139,8 @@ function Get-WsusUpdatesAndApprovals {
         
         [string]$ComputerGroupGuid,
 
+        [bool]$IncludeSupersededUpdates = $true,
+
         [ValidateSet("Any", "Approved", "Unapproved", "Declined")]
         [string]$ApprovalStatus = "Any"
     )
@@ -174,6 +176,9 @@ function Get-WsusUpdatesAndApprovals {
     {
         $i ++
         Write-Progress -Activity "Getting update approvals" -PercentComplete (($i/$($Updates.Count))*100) -Status "$i of $($Updates.Count)"
+
+        # Do not add the update if it is superseded, move on. 
+        if ($Update.IsSuperseded -eq $true -and $IncludeSupersededUpdates -eq $false) { continue }
 
         $UpdateObj = New-Object -TypeName PSCustomObject
         Add-Member -InputObject $UpdateObj -MemberType NoteProperty -Name Id -Value $Update.Id.UpdateId.Guid
@@ -229,6 +234,7 @@ function Get-WsusUpdatesAndApprovals {
         $UpdateDetails += $UpdateObj
     }
     Write-Progress -Completed $true
+    
     # Output Results based on the ApprovalStatus Flag
     If ($ApprovalStatus -eq "Any") { Write-Output $UpdateDetails }
     Else { Write-Output $UpdateDetails | Where {$_.ApprovalState -eq $ApprovalStatus } }

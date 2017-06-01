@@ -16,40 +16,41 @@
         <GroupBox x:Name="group_filters" Header="Filters" HorizontalAlignment="Stretch" Margin="10,70,10,0" VerticalAlignment="Top" Height="92" Width="972"  IsEnabled="False">
             <Grid Margin="0,0,0,0">
                 <Label x:Name="filters_computergroup_label" Content="Computer Group:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="3,10,0,0"/>
-                <ComboBox x:Name="filters_computergroup" HorizontalAlignment="Left" Margin="131,14,0,0" VerticalAlignment="Top" Width="260" SelectedIndex="0">
+                <ComboBox x:Name="filters_computergroup" HorizontalAlignment="Left" Margin="131,14,0,0" VerticalAlignment="Top" Width="250" SelectedIndex="0">
                 </ComboBox>
-                <Label x:Name="filters_updatecategory_label" Content="Update Category:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="401,14,0,0"/>
-                <ComboBox x:Name="filters_updatecategory" HorizontalAlignment="Left" Margin="509,14,0,0" VerticalAlignment="Top" Width="260"/>
+                <Label x:Name="filters_updatecategory_label" Content="Update Category:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="394,14,0,0"/>
+                <ComboBox x:Name="filters_updatecategory" HorizontalAlignment="Left" Margin="502,14,0,0" VerticalAlignment="Top" Width="250"/>
                 <Label x:Name="filters_updateclassification_label" Content="Update Classification:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="3,41,0,0"/>
-                <ComboBox x:Name="filters_updateclassification" HorizontalAlignment="Left" Margin="131,41,0,0" VerticalAlignment="Top" Width="260" SelectedIndex="0">
+                <ComboBox x:Name="filters_updateclassification" HorizontalAlignment="Left" Margin="131,41,0,0" VerticalAlignment="Top" Width="250" SelectedIndex="0">
                 </ComboBox>
-                <Label x:Name="filters_approvalstatus_label" Content="Approval Status:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="401,41,0,0"/>
-                <ComboBox x:Name="filters_approvalstatus" HorizontalAlignment="Left" Margin="509,41,0,0" VerticalAlignment="Top" Width="260" SelectedIndex="0">
+                <Label x:Name="filters_approvalstatus_label" Content="Approval Status:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="394,41,0,0"/>
+                <ComboBox x:Name="filters_approvalstatus" HorizontalAlignment="Left" Margin="502,41,0,0" VerticalAlignment="Top" Width="250" SelectedIndex="0">
                 </ComboBox>
-                <Button x:Name="filters_getupdatedetails" Content="Get Update Details" HorizontalAlignment="Left" Margin="790,14,0,0" VerticalAlignment="Top" Width="148" Height="46"/>
+                <CheckBox x:Name="filters_includesuperseded" Content="Include Superseded Updates" HorizontalAlignment="Left" Margin="780,15,0,0" VerticalAlignment="Top" IsChecked="False"/>
+                <Button x:Name="filters_getupdatedetails" Content="Get Update Details" HorizontalAlignment="Left" Margin="775,41,0,0" VerticalAlignment="Top" Width="175"/>
             </Grid>
         </GroupBox>
         <GroupBox x:Name="group_updates" Header="Manage Updates" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10,172,10,35" IsEnabled="False">
             <Grid Margin="0,0,0,0">
                 <Grid Width="952" HorizontalAlignment="Center">
-                <Button x:Name="manage_selectall" Content="Select All" HorizontalAlignment="Left" Margin="9,10,0,0" VerticalAlignment="Top" Width="120"/>
-                <Button x:Name="manage_unselectall" Content="Unselect All" HorizontalAlignment="Left" Margin="10,37,0,0" VerticalAlignment="Top" Width="120"/>
+                    <Button x:Name="manage_selectall" Content="Select All" HorizontalAlignment="Left" Margin="9,10,0,0" VerticalAlignment="Top" Width="120"/>
+                    <Button x:Name="manage_unselectall" Content="Unselect All" HorizontalAlignment="Left" Margin="10,37,0,0" VerticalAlignment="Top" Width="120"/>
 
-                <Button x:Name="manage_declineselected" Content="Decline Update" HorizontalAlignment="Left" Margin="135,37,0,0" VerticalAlignment="Top" Width="120"/>
-                <Button x:Name="manage_exportcsv" Content="Export CSV" HorizontalAlignment="Left" Margin="135,10,0,0" VerticalAlignment="Top" Width="120"/>
-                <GroupBox x:Name="group_approvals" Header="Approval Action &amp; Target:" HorizontalAlignment="Left"  Margin="260,0,0,381" IsEnabled="True" Height="61" VerticalAlignment="Top" Width="690">
-                    <Grid>
-                        <ComboBox x:Name="ddl_manage_approvalsaction" HorizontalAlignment="Left" Margin="62,10,0,0" VerticalAlignment="Top" Width="158" SelectedIndex="0">
-                            <ComboBoxItem Content="Install" HorizontalAlignment="Left" Width="156"/>
-                            <ComboBoxItem Content="Uninstall" HorizontalAlignment="Left" Width="156"/>
-                            <ComboBoxItem Content="NotApproved" HorizontalAlignment="Left" Width="156"/>
-                        </ComboBox>
-                        <ComboBox x:Name="ddl_manage_approvalstarget" HorizontalAlignment="Left" Margin="322,10,0,0" VerticalAlignment="Top" Width="207" SelectedIndex="0"/>
-                        <Button x:Name="manage_approveselected" Content="Approve Selected" HorizontalAlignment="Left" Margin="534,10,0,0" VerticalAlignment="Top" Width="134"/>
-                        <Label x:Name="filters_computergroup_label_Copy" Content="Action:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,6,0,0"/>
-                        <Label x:Name="filters_computergroup_label_Copy1" Content="Target Group:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="234,6,0,0"/>
-                    </Grid>
-                </GroupBox>
+                    <Button x:Name="manage_declineselected" Content="Decline Update" HorizontalAlignment="Left" Margin="135,37,0,0" VerticalAlignment="Top" Width="120"/>
+                    <Button x:Name="manage_exportcsv" Content="Export CSV" HorizontalAlignment="Left" Margin="135,10,0,0" VerticalAlignment="Top" Width="120"/>
+                    <GroupBox x:Name="group_approvals" Header="Approval Action &amp; Target:" HorizontalAlignment="Left"  Margin="260,0,0,381" IsEnabled="True" Height="61" VerticalAlignment="Top" Width="690">
+                        <Grid>
+                            <ComboBox x:Name="ddl_manage_approvalsaction" HorizontalAlignment="Left" Margin="62,10,0,0" VerticalAlignment="Top" Width="158" SelectedIndex="0">
+                                <ComboBoxItem Content="Install" HorizontalAlignment="Left" Width="156"/>
+                                <ComboBoxItem Content="Uninstall" HorizontalAlignment="Left" Width="156"/>
+                                <ComboBoxItem Content="NotApproved" HorizontalAlignment="Left" Width="156"/>
+                            </ComboBox>
+                            <ComboBox x:Name="ddl_manage_approvalstarget" HorizontalAlignment="Left" Margin="322,10,0,0" VerticalAlignment="Top" Width="207" SelectedIndex="0"/>
+                            <Button x:Name="manage_approveselected" Content="Approve Selected" HorizontalAlignment="Left" Margin="534,10,0,0" VerticalAlignment="Top" Width="134"/>
+                            <Label x:Name="filters_computergroup_label_Copy" Content="Action:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,6,0,0"/>
+                            <Label x:Name="filters_computergroup_label_Copy1" Content="Target Group:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="234,6,0,0"/>
+                        </Grid>
+                    </GroupBox>
                 </Grid>
                 <DataGrid x:Name="manage_updates" HorizontalAlignment="Stretch" Margin="10,66,10,10" VerticalAlignment="Stretch" AutoGenerateColumns="False">
                     <DataGrid.Columns>
@@ -65,6 +66,11 @@
                                     <CheckBox IsChecked="{Binding Checked,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
+                            <DataGridTemplateColumn.CellStyle>
+                                <Style TargetType="DataGridCell">
+                                    <Setter Property="HorizontalAlignment"  Value="Center"/>
+                                </Style>
+                            </DataGridTemplateColumn.CellStyle>
                         </DataGridTemplateColumn>
                     </DataGrid.Columns>
                 </DataGrid>
