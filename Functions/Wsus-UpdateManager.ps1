@@ -30,6 +30,7 @@ function Connect-WsusServer {
 
     # Attempt the connection to the WSUS Server
     try {
+	Write-Verbose "Connect To Server: $WsusServerFqdn, Port: $WsusServerPort, Secure: $WsusServerSecureConnect"
         $Global:WsusServer = [Microsoft.UpdateServices.Administration.AdminProxy]::getUpdateServer($WsusServerFqdn, $WsusServerSecureConnect, $WsusServerPort)
     }
     catch {

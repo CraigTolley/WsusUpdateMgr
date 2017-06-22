@@ -51,8 +51,8 @@ function Show-WsusUpdateManagerUi {
             try {
                 $txt_CurrentAction.Content = "Connecting..."
                 $grp_filters.IsEnabled = $false
-                $grp_updates.IsEnabled = $false
-                Connect-WsusServer -WsusServerFqdn $txt_connect_servername.Text -WsusServerPort $txt_connect_serverport.Text -WsusServerSecureConnect ([bool]($chk_connect_usesecureconnect.Checked)) -ErrorAction Stop
+                $grp_updates.IsEnabled = $false	
+                Connect-WsusServer -WsusServerFqdn $txt_connect_servername.Text -WsusServerPort $txt_connect_serverport.Text -WsusServerSecureConnect ([bool]($chk_connect_usesecureconnect.IsChecked)) -ErrorAction Stop
                 $grp_filters.IsEnabled = $true
                 $txt_CurrentAction.Content = "Connected"
             }
