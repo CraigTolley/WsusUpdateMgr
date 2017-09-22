@@ -4,6 +4,8 @@ $VerbosePreference = "continue"
 [xml]$XAMLDetails = Get-Content -Path (Join-Path -Path (Split-Path $MyInvocation.MyCommand.Path) -ChildPath "Wsus-UpdateManager.UI.Details.xaml")
 [xml]$XAMLHelpAbout = Get-Content -Path (Join-Path -Path (Split-Path $MyInvocation.MyCommand.Path) -ChildPath "Wsus-UpdateManager.UI.HelpAbout.xaml")
 
+$SavedConfigLocation = Join-Path -Path ([Environment]::GetFolderPath("ApplicationData")) -ChildPath "WsusUpdateManager\settings.xml"
+
 function Show-WsusUpdateManagerUi {
     # Load the WPF Assemblys
     Add-type -AssemblyName PresentationCore
@@ -63,6 +65,9 @@ function Show-WsusUpdateManagerUi {
                 $txt_CurrentAction.Content = "Failed to connect."
                 return
             }
+
+            # Once a successful connection has been made, save the details for future use. 
+            Save-WsusUpdateSettings
 
             # Now we are connected, retrieve details to populate all of the filters
             try {
@@ -261,6 +266,20 @@ function Show-WsusUpdateManagerUi {
 
     #endregion
 
+    #region LoadSavedSettings 
+    If (Test-Path $SavedConfigLocation) {
+        try {
+            [xml]$SavedConfig = Get-Content -Path $SavedConfigLocation
+            $txt_connect_servername.Text = $SavedConfig.WsusUpdateManager.ServerName
+            $txt_connect_serverport.Text = $SavedConfig.WsusUpdateManager.ServerPort
+            $chk_connect_usesecureconnect.IsChecked = [bool]$SavedConfig.WsusUpdateManager.UseSecureConnection
+        }
+        catch {
+            Write-Verbose "Failed to load saved configuration. Error: $_"
+        }
+    }
+    #endregion
+
     $btn_show_help.Add_Click( {
         Show-WsusUpdateHelpAboutUi
         } )
@@ -367,4 +386,37 @@ function Show-WsusUpdateHelpAboutUi {
     })
 
     $HelpWindow.ShowDialog() | Out-Null
+}
+
+function Save-WsusUpdateSettings {
+    try {
+        # Create the base XML node
+        [XML]$Output = New-Object XML
+        $RootElement = $Output.CreateElement("WsusUpdateManager")
+        $Output.AppendChild($RootElement) | Out-Null
+
+        # Server Name
+        $XmlServerName = $Output.CreateElement("ServerName")
+        $XmlServerName.InnerText = $txt_connect_servername.Text
+        $RootElement.AppendChild($XmlServerName) | Out-Null
+
+        # Server Port
+        $XmlServerPort = $Output.CreateElement("ServerPort")
+        $XmlServerPort.InnerText = $txt_connect_serverport.Text
+        $RootElement.AppendChild($XmlServerPort) | Out-Null
+
+        # Use Secure Connection
+        $XmlUseSecureConnection = $Output.CreateElement("UseSecureConnection")
+        $XmlUseSecureConnection.InnerText = ([bool]$chk_connect_usesecureconnect.IsChecked).ToString()
+        $RootElement.AppendChild($XmlUseSecureConnection) | Out-Null
+
+        # Create the folder if it does not exist
+        If ((Test-Path (Split-Path $SavedConfigLocation)) -eq $false) {
+            New-Item -Path (Split-Path $SavedConfigLocation) -ItemType Directory -Force
+        } 
+
+        $Output.Save($SavedConfigLocation)
+    } Catch {
+        Write-Verbose "Failed to save currently used configuration. Error $_. Skipping save."
+    }
 }
